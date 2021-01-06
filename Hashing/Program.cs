@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace Hashing
 {
@@ -22,14 +23,19 @@ namespace Hashing
                     Console.WriteLine("Invalid input");
                     break;
             }
-
-            
         }
-
+        
         static void Hash()
         {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+
             Console.WriteLine("Message: ");
             string message = Console.ReadLine();
+
+            byte[] messageData = System.Text.Encoding.UTF8.GetBytes(message);
+            byte[] hash = md5.ComputeHash(messageData);
+
+            Console.WriteLine("Hash: " + Convert.ToBase64String(hash));
         }
 
         static void Hmac()
@@ -37,7 +43,7 @@ namespace Hashing
             Console.WriteLine("1. Encrypt \n2. Decrypt");
 
             Console.WriteLine("1. SHA1 \n2. MD5 \n3. RIPEMD \n4. SHA256 \n5. SHA384 \n6. SHA512");
-
+            int input = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Message: ");
             string message = Console.ReadLine();
